@@ -61,7 +61,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install dependencies for linting
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install ruff
@@ -92,14 +92,14 @@ jobs:
         run: |
           python -m venv .env
           source .env/bin/activate
-          python -m pip install --upgrade pip
+          pip install --upgrade pip
           pip install poetry
           poetry install --with dev
 
-      - name: Run tests with pytest using Poetry environment
+      - name: Run tests
         run: |
           mkdir -p reports
-          poetry run pytest --cov-report html:reports/tests
+          pytest --cov-report html:reports/tests
 
       - name: Upload test artifacts
         uses: actions/upload-artifact@v3
