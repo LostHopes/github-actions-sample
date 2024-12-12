@@ -12,11 +12,11 @@ jobs:
       docker:
         image: docker:20.10.16
         options: >-
-          --privileged
+          --privileged # Required for Docker-in-Docker
           --network host
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Login to Docker Registry
         run: echo "${{ secrets.CI_REGISTRY_PASSWORD }}" | docker login ${{ secrets.CI_REGISTRY }} -u "${{ secrets.CI_REGISTRY_USER }}" --password-stdin
@@ -27,9 +27,9 @@ jobs:
           docker build -t ${{ secrets.DOCKER_IMAGE_NAME }} .
           docker push ${{ secrets.DOCKER_IMAGE_NAME }}
           mkdir reports && docker save -o reports/build.tar ${{ secrets.DOCKER_IMAGE_NAME }}
-
+      
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build-tar
           path: reports/build.tar
@@ -39,7 +39,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Python Environment
         run: |
@@ -53,9 +53,9 @@ jobs:
         run: |
           echo "Running linter..."
           ruff check . --output-format json --output-file reports/lint.json
-
+      
       - name: Upload Lint Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: lint-json
           path: reports/lint.json
@@ -65,7 +65,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Python Environment
         run: |
@@ -79,9 +79,9 @@ jobs:
         run: |
           echo "Running tests..."
           pytest --cov-report html:reports/tests
-
+      
       - name: Upload Test Reports
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: test-reports
           path: reports/tests/*
