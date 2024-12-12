@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: Login to DockerHub
-      uses: docker/login-action@v4
+      uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -31,7 +31,7 @@ jobs:
         docker save -o reports/build.tar ${{ github.repository }}:${{ github.sha }}
 
     - name: Upload build artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: build-artifact
         path: reports/build.tar
@@ -41,7 +41,7 @@ jobs:
     needs: build
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -62,7 +62,7 @@ jobs:
         ruff check . --output-format json --output-file reports/lint.json
 
     - name: Upload lint artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: lint-artifact
         path: reports/lint.json
@@ -72,7 +72,7 @@ jobs:
     needs: build
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -93,7 +93,7 @@ jobs:
         pytest --cov-report html:reports/tests
 
     - name: Upload test artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: test-artifacts
         path: reports/tests/*
