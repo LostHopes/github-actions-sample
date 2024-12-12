@@ -1,1 +1,1 @@
-CI/CD with GitLab
+CI/CD with GitHub Actions
