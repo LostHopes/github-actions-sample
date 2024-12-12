@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "lab2"
+version = "0.1.0"
+description = "Hello, World project"
+authors = ["losthope <arsen.melnuchyk@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+Flask = "^3.0.3"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+ruff = "^0.8.1"
+
+[tool.pytest.ini_options]
+addopts = "-v --cov=app src/tests/"
+
+[tool.ruff]
+line-length = 100
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
