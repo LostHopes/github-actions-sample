@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     services:
       docker:
-        image: docker:20.10.16
+        image: docker:stable
         options: >-
-          --privileged # Required for Docker-in-Docker
+          --privileged
           --network host
     steps:
       - name: Checkout code
@@ -26,7 +26,8 @@ jobs:
           echo "Building docker image..."
           docker build -t ${{ secrets.DOCKER_IMAGE_NAME }} .
           docker push ${{ secrets.DOCKER_IMAGE_NAME }}
-          mkdir reports && docker save -o reports/build.tar ${{ secrets.DOCKER_IMAGE_NAME }}
+          mkdir reports
+          docker save -o reports/build.tar ${{ secrets.DOCKER_IMAGE_NAME }}
       
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
