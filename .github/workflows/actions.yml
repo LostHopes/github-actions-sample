@@ -76,7 +76,7 @@ jobs:
           name: lint-artifact
           path: reports/lint.json
 
-    test:
+  test:
     runs-on: ubuntu-latest
     needs: build
     steps:
