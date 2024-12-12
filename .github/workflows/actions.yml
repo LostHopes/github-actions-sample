@@ -99,6 +99,7 @@ jobs:
       - name: Run tests
         run: |
           mkdir -p reports
+          source .env/bin/activate
           pytest --cov-report html:reports/tests
 
       - name: Upload test artifacts
